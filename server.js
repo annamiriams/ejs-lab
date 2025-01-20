@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+// this sets EJS as the view engine, so when i render pages below, i don't need to specifically write '.ejs'; not yet sure if it has more functionality but it's used in all of the EJS tutorials that i'm watching...
+app.set("view engine", "ejs");
+
 const RESTAURANT = {
     name: 'The Green Byte Bistro',
     isOpen: true,
@@ -51,26 +54,32 @@ const RESTAURANT = {
 }
 
 app.get('/', (req, res) => {
-    res.render('home.ejs', {
-        RESTAURANT: RESTAURANT
-        
+    res.render('home', {
+        RESTAURANT: RESTAURANT,
     });
 });
 
 app.get('/menu', (req, res) => {
-    res.render('menu.ejs', {
+    res.render('menu', {
         // with some help from chatgpt, this is how it seems i need to access the menu array
         menu: RESTAURANT.menu
     });
 });
 
 // exercise 3 and i'm stuck so i'm taking a break
-app.get('/menu/:category', (res, req) => {
-    res.send(`${req.params.menu.category}`)
-    
-    res.render('category.ejs', {
-        menuItems: 
-    })
+app.get('/menu/:category', (req, res) => {
+    const category = req.params.category;
+    // changed the first letter to upper case (character at index 0) and added it back to the rest of the word (slice the letter at index 1 and onward)
+    const capCategory = category.charAt(0).toUpperCase() + category.slice(1);
+    // using the filter method to filter through all menu items and pulling them based on category
+    const menuItems = RESTAURANT.menu.filter(item => item.category === category);
+    // console.log(menuItems);
+    res.render('category', {
+        // passing all the variables defined above into the locals object
+        category,
+        capCategory,
+        menuItems,
+    });
 });
 
 app.listen(3000);

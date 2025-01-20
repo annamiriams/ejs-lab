@@ -13,6 +13,11 @@
     <h1><%= RESTAURANT.name%></h1>
     <p><strong>Located at:</strong> <%= RESTAURANT.address %></p>
     <p><strong>Phone:</strong> <%= RESTAURANT.phone%></p>
+    <p><% if (RESTAURANT.isOpen) { %></p>
+        <%= 'Yes, we are open!' %>
+    <% } else { %>
+        <%= 'Sorry, we are closed.' %>
+    <% }; %>
 </body>
 
 </html>

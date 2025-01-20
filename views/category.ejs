@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= capCategory %></title>
+</head>
+
+<body>
+    <%- include('./partials/nav') %>
+    
+    <h1><%= capCategory %></h1>
+    
+    <% menuItems.forEach((item)=> { %>
+        <h3>
+            <%= item.name %> ~ $<%= item.price %>
+        </h3>
+        
+        <p>
+            <%= item.details %> <em> Rating: <%= item.rating %> </em>
+        </p>
+    <% }); %>
+    
+</body>
+</html>
